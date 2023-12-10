@@ -97,7 +97,8 @@ _proto_mbim_setup() {
 
 	[ "$pincode" ] && {
 		echo "mbim[$$]" "Sending pin"
-		umbim $DBG -n -t $tid -d $device unlock "$pincode" || {
+		umbim $DBG -n -t $tid -d $device unlock "$pincode"
+		[ $? -eq 2 ] && {
 			echo "mbim[$$]" "Unable to verify PIN"
 			tid=$((tid + 1))
 			umbim $DBG -t $tid -d "$device" disconnect
